@@ -14,7 +14,7 @@ export default new Vuetify({
   },
   rtl: false,
   theme: {
-    dark: false,
+    dark: true,
     themes: {
       dark: {
         primary: '#AD1457',

@@ -1,7 +1,8 @@
 <template>
   <div id="main">
     <v-app>
-      <v-navigation-drawer
+      <v-navigation-drawer v-cloak
+        v-if="getShowCondition()"
         color="secondary"
         app
         v-model="twoWayDrawerVisible"
@@ -12,7 +13,8 @@
         <nav-drawer></nav-drawer>
       </v-navigation-drawer>
 
-      <v-app-bar app clipped-left short dense color="primary">
+      <v-app-bar v-cloak app clipped-left short dense color="primary"
+      v-if="getShowCondition()">
         <v-app-bar-nav-icon
           @click="toggleDrawerVisible"
           class="hidden-md-and-up"
@@ -116,6 +118,9 @@ export default {
   },
 
   methods: {
+    getShowCondition () {
+      return this.$route.name && this.$route.name !== 'landingpage'
+    },
     goto (destination) {
       if (this.$router.currentRoute.path !== destination) {
         this.$router.push(destination)
@@ -148,7 +153,4 @@ export default {
   color: white;
 }
 
-#trafficLight {
-  cursor: pointer;
-}
 </style>

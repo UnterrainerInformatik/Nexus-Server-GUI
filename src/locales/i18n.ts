@@ -19,6 +19,14 @@ const en = {
       telephone: 'Telephone',
       version: 'Version',
       web: 'Webpage'
+    },
+    landingPage: {
+      title: 'Nexus - The Universal Gaming Networking Layer',
+      state: {
+        toDo: ['Thousand things', 'Another thousand things'],
+        inProgress: ['Making the nexus website'],
+        done: ['Nothing']
+      }
     }
   },
   tooltip: {
@@ -27,6 +35,7 @@ const en = {
       main: 'The main page'
     },
     mnu: {
+      main: 'Main Page',
       dark: 'Switch between light- and dark-theme',
       help: 'Turn display of the<br />help-tooltips on/off',
       logout: 'Logout or change user',
@@ -84,6 +93,13 @@ const de = Lang(en, {
       telephone: 'Telefon',
       version: 'Version',
       web: 'Webseite'
+    },
+    landingPage: {
+      state: {
+        toDo: ['Tausend Dinge', 'nochmal tausend Dinge'],
+        inProgress: ['Die Nexus Webseite machen'],
+        done: ['Nichts']
+      }
     }
   },
   tooltip: {
@@ -92,6 +108,7 @@ const de = Lang(en, {
       main: 'Die Hauptseite'
     },
     mnu: {
+      main: 'Hauptseite',
       dark: 'Zwischen heller und dunkler Einstellung wechseln',
       help: 'Ein oder ausschalten der<br />kontextbezogenen Hilfs-Tooltips',
       logout: 'Abmelden oder Benutzer wechseln',
