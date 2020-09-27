@@ -1,0 +1,22 @@
+version: '3'
+services:
+    web:
+        build:
+            context: .
+            dockerfile: Dockerfile.dev
+        ports:
+            - "1480:8080"
+            - "14443:8443"
+        volumes:
+            - /app/node_modules 
+            - .:/app
+        labels:
+            - "traefik.enable=true"
+            - "traefik.nexus-gui.port=8080"
+            - "traefik.nexus-gui.backend=nexus-gui"
+            - "traefik.nexus-gui.frontend.rule=Host:nexus.unterrainer.info"
+            - "traefik.nexus-gui.frontend.entryPoints=http,https"
+networks:
+    default:
+      external:
+        name: proxy_default
