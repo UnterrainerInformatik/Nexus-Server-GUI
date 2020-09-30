@@ -1,7 +1,8 @@
 <template>
   <div id="main">
     <v-app>
-      <v-navigation-drawer v-cloak
+      <v-navigation-drawer
+        v-cloak
         v-if="getShowCondition()"
         color="secondary"
         app
@@ -13,8 +14,15 @@
         <nav-drawer></nav-drawer>
       </v-navigation-drawer>
 
-      <v-app-bar v-cloak app clipped-left short dense color="primary"
-      v-if="getShowCondition()">
+      <v-app-bar
+        v-cloak
+        app
+        clipped-left
+        short
+        dense
+        color="primary"
+        v-if="getShowCondition()"
+      >
         <v-app-bar-nav-icon
           @click="toggleDrawerVisible"
           class="hidden-md-and-up"
@@ -146,11 +154,10 @@ export default {
 
 .v-navigation-drawer {
   width: $nav_menu_width;
-  max-width: calc(100vw - nav_menu_width);
+  max-width: calc(100vw - #{$nav_menu_width});
 }
 
 .nav-drawer-white {
   color: white;
 }
-
 </style>
