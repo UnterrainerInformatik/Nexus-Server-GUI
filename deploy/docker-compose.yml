@@ -4,14 +4,14 @@ services:
     image: gufalcon/nexus-server-gui:latest
     restart: always
     ports:
-      - "1380:8080"
-      - "13443:8443"
+      - "1380:80"
+      - "13443:443"
     environment:
-      - HTTP_PORT=8080
+      - HTTP_PORT=80
       - HTTP_HOST=0.0.0.0
     labels:
        - "traefik.enable=true"
-       - "traefik.nexus.port=8080"
+       - "traefik.nexus.port=80"
        - "traefik.nexus.backend=nexus"
        - "traefik.nexus.frontend.rule=Host:nexus.unterrainer.info"
        - "traefik.nexus.frontend.entryPoints=http,https"
