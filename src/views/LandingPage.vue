@@ -4,8 +4,8 @@
       <v-card class="fill-width">
         <v-card-title>{{ $t('page.landingPage.title') }}</v-card-title>
       </v-card>
-      <v-carousel cycle height="400" hide-delimiter-background show-arrows-on-hover>
-        <v-carousel-item></v-carousel-item>
+      <v-carousel cycle height="66vh" hide-delimiter-background show-arrows-on-hover>
+        <v-carousel-item :src="require('@/assets/Nexus.png')" contain title="Nexus"></v-carousel-item>
       </v-carousel>
       <v-card>
         <v-card-text>
