@@ -10,7 +10,7 @@ services:
       - HTTP_PORT=80
       - HTTP_HOST=0.0.0.0
     volumes:
-      - "/app/deploy/cms-gui/nginx.conf:/etc/nginx/nginx.conf"
+      - "/app/deploy/nexus-server-gui/nginx.conf:/etc/nginx/nginx.conf"
     command: ['nginx', '-g', 'daemon off;']
     labels:
        - "traefik.enable=true"
