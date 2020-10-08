@@ -22,7 +22,7 @@ services:
       - "traefik.nexus.frontend.entryPoints=http,https"
 
   keycloak:
-    image: quay.io/keycloak/keycloak:latest
+    image: jboss/keycloak:11.0.2
     restart: always
     depends_on:
       - keycloak_db
@@ -36,6 +36,9 @@ services:
       - DB_DATABASE=keycloak
       - DB_USER=keycloak
       - DB_PASSWORD=${KEYCLOAK_DB_PASSWORD}
+      - PROXY_ADDRESS_FORWARDING=true
+      - KEYCLOAK_HOSTNAME=keycloak.unterrainer.info
+    command: ["-b", "0.0.0.0", "-Dkeycloak.profile.feature.docker=enabled"]
     labels:
       - "traefik.enable=true"
       - "traefik.keycloak.port=8080"
@@ -53,6 +56,8 @@ services:
       - MYSQL_DATABASE=keycloak
       - MYSQL_USER=keycloak
       - MYSQL_PASSWORD=${KEYCLOAK_DB_PASSWORD}
+      - PROXY_ADDRESS_FORWARDING=true
+      - KEYCLOAK_HOSTNAME=keycloak.unterrainer.info
     volumes:
       - "/app/data/keycloak-nexus/mysql-data/db:/var/lib/mysql"
     labels:
