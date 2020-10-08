@@ -6,9 +6,12 @@ const store = {
     config: {
       servers: {
         uinf: {
-          protocol: 'https',
-          address: 'nexus.unterrainer.info', // DEV
-          port: '443'
+          // protocol: process.env.VUE_APP_PROTOCOL ? process.env.VUE_APP_PROTOCOL : 'https',
+          // address: process.env.VUE_APP_ADDRESS ? process.env.VUE_APP_ADDRESS : 'nexus-server.unterrainer.info',
+          // port: process.env.VUE_APP_PORT ? process.env.VUE_APP_PORT : '443'
+          protocol: process.env.VUE_APP_PROTOCOL ? process.env.VUE_APP_PROTOCOL : 'http', // DEV
+          address: process.env.VUE_APP_ADDRESS ? process.env.VUE_APP_ADDRESS : 'localhost', // DEV
+          port: process.env.VUE_APP_PORT ? process.env.VUE_APP_PORT : '1180' // DEV
         }
       },
       endpoint: {
