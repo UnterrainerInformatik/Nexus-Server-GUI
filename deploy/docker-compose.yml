@@ -22,7 +22,7 @@ services:
       - "traefik.nexus.frontend.entryPoints=http,https"
 
   keycloak:
-    image: jboss/keycloak:11.0.2
+    image: quay.io/keycloak/keycloak:latest
     restart: always
     depends_on:
       - keycloak_db
@@ -34,11 +34,8 @@ services:
       - DB_VENDOR=mariadb
       - DB_ADDR=keycloak_db
       - DB_DATABASE=keycloak
-      - DB_PORT=3306
       - DB_USER=keycloak
       - DB_PASSWORD=${KEYCLOAK_DB_PASSWORD}
-    volumes:
-      - "/app/data/keycloak-nexus/mysql-data/db:/var/lib/mysql"
     labels:
       - "traefik.enable=true"
       - "traefik.keycloak.port=8080"
