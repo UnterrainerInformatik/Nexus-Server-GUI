@@ -44,7 +44,7 @@ services:
       - "traefik.keycloak.port=8080"
       - "traefik.keycloak.backend=keycloak"
       - "traefik.keycloak.frontend.rule=Host:keycloak.unterrainer.info"
-      - "traefik.keycloak.frontend.entryPoints=http"
+      - "traefik.keycloak.frontend.entryPoints=http, https"
 
   keycloak_db:
     image: mariadb:latest
