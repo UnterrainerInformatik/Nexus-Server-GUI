@@ -1,8 +1,10 @@
-version: '3'
+version: "3"
 services:
   web:
     image: gufalcon/nexus-server-gui:latest
     restart: always
+    depends_on:
+      - keycloak
     ports:
       - "1380:80"
       - "13443:443"
@@ -11,13 +13,48 @@ services:
       - HTTP_HOST=0.0.0.0
     volumes:
       - "/app/deploy/nexus-server-gui/nginx.conf:/etc/nginx/nginx.conf"
-    command: ['nginx', '-g', 'daemon off;']
+    command: ["nginx", "-g", "daemon off;"]
     labels:
-       - "traefik.enable=true"
-       - "traefik.nexus.port=80"
-       - "traefik.nexus.backend=nexus"
-       - "traefik.nexus.frontend.rule=Host:nexus.unterrainer.info"
-       - "traefik.nexus.frontend.entryPoints=http,https"
+      - "traefik.enable=true"
+      - "traefik.nexus.port=80"
+      - "traefik.nexus.backend=nexus"
+      - "traefik.nexus.frontend.rule=Host:nexus.unterrainer.info"
+      - "traefik.nexus.frontend.entryPoints=http,https"
+
+  keycloak:
+    image: jboss/keycloak:11.0.2
+    restart: always
+    depends_on:
+      - keycloak_db
+    ports:
+      - 13222:8080
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=${KEYCLOAK_PASSWORD}
+      - DB_VENDOR=mysql
+      - DB_USER=keycloak
+      - DB_PASSWORD=${KEYCLOAK_DB_PASSWORD}
+    volumes:
+      - "/app/data/keycloak-nexus/mysql-data/db:/var/lib/mysql"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.keycloak.port=8080"
+      - "traefik.keycloak.backend=keycloak"
+      - "traefik.keycloak.frontend.rule=Host:keycloak.unterrainer.info"
+      - "traefik.keycloak.frontend.entryPoints=http,https"
+
+  keycloak_db:
+    image: mariadb:latest
+    restart: always
+    ports:
+      - 13300:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=${KEYCLOAK_DB_ROOT_PASSWORD}
+      - MYSQL_DATABASE=keycloak
+      - MYSQL_USER=keycloak
+      - MYSQL_PASSWORD=${KEYCLOAK_DB_PASSWORD}
+    volumes:
+      - "/app/data/keycloak-nexus/mysql-data/db:/var/lib/mysql"
 
 networks:
   default:
