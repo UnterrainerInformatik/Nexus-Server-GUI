@@ -30,11 +30,12 @@
           <v-icon>menu</v-icon>
         </v-app-bar-nav-icon>
 
-        <v-toolbar-title>
-          <v-container>
+        <v-toolbar-title class="ma-0 pa-0">
+          <v-container class="ma-0 pa-0">
             <img
-              width="250"
-              alt="Unterrainer Informatik logo"
+              class="ma-0 pa-0 mt-3"
+              width="200"
+              alt="nexus-logo"
               src="@/assets/logo.png"
             /> </v-container
         ></v-toolbar-title>
@@ -54,7 +55,7 @@
           z-index="1000"
         >
           <template v-slot:activator="{ on, attrs }">
-            <v-btn icon to="/logout" v-bind="attrs" v-on="on">
+            <v-btn icon to="landingpage" v-bind="attrs" v-on="on">
               <v-icon color="white">power_settings_new</v-icon>
             </v-btn>
           </template>

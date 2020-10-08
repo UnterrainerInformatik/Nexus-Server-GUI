@@ -1,6 +1,11 @@
 <template>
   <div class="home">
-    <v-container fluid> </v-container>
+    <v-container fluid>
+      <v-alert color="success">success</v-alert>
+      <v-alert color="info">info</v-alert>
+      <v-alert color="warning">warning</v-alert>
+      <v-alert color="error">error</v-alert>
+    </v-container>
   </div>
 </template>
 

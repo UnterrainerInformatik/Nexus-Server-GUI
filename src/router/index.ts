@@ -21,11 +21,6 @@ const routes: Array<RouteConfig> = [
     component: () => import('../views/LandingPage.vue')
   },
   {
-    path: '/logout',
-    name: 'logout',
-    component: () => import('../views/Logout.vue')
-  },
-  {
     path: '/settings/preferences',
     name: 'preferences',
     component: () => import('../views/Preferences.vue')
