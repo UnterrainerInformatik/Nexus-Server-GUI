@@ -31,7 +31,10 @@ services:
     environment:
       - KEYCLOAK_USER=admin
       - KEYCLOAK_PASSWORD=${KEYCLOAK_PASSWORD}
-      - DB_VENDOR=mysql
+      - DB_VENDOR=mariadb
+      - DB_ADDR=keycloak_db
+      - DB_DATABASE=keycloak
+      - DB_PORT=3306
       - DB_USER=keycloak
       - DB_PASSWORD=${KEYCLOAK_DB_PASSWORD}
     volumes:
