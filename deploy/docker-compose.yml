@@ -55,6 +55,8 @@ services:
       - MYSQL_PASSWORD=${KEYCLOAK_DB_PASSWORD}
     volumes:
       - "/app/data/keycloak-nexus/mysql-data/db:/var/lib/mysql"
+    labels:
+      - "traefik.enable=false"
 
 networks:
   default:
