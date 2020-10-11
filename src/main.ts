@@ -31,7 +31,6 @@ const initOptions = {
 }
 
 const keycloak = Keycloak(initOptions)
-console.log('start ##############################')
 keycloak.init({
   onLoad: 'login-required'
 }).then((auth) => {
@@ -41,7 +40,6 @@ keycloak.init({
     console.log('Authenticated')
   }
 
-  console.log('create vue ##############################')
   new Vue({
     vuetify,
     i18n,
