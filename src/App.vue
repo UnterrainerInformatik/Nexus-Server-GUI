@@ -55,7 +55,7 @@
           z-index="1000"
         >
           <template v-slot:activator="{ on, attrs }">
-            <v-btn icon to="landingpage" v-bind="attrs" v-on="on">
+            <v-btn icon href="https://nexus.unterrainer.info" v-bind="attrs" v-on="on">
               <v-icon color="white">power_settings_new</v-icon>
             </v-btn>
           </template>

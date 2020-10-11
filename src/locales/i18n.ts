@@ -19,14 +19,6 @@ const en = {
       telephone: 'Telephone',
       version: 'Version',
       web: 'Webpage'
-    },
-    landingPage: {
-      title: 'Nexus - The Universal Gaming Networking Layer',
-      state: {
-        toDo: ['Thousand things', 'Another thousand things'],
-        inProgress: ['Making the nexus website'],
-        done: ['Nothing']
-      }
     }
   },
   tooltip: {
@@ -93,13 +85,6 @@ const de = Lang(en, {
       telephone: 'Telefon',
       version: 'Version',
       web: 'Webseite'
-    },
-    landingPage: {
-      state: {
-        toDo: ['Tausend Dinge', 'nochmal tausend Dinge'],
-        inProgress: ['Die Nexus Webseite machen'],
-        done: ['Nichts']
-      }
     }
   },
   tooltip: {
