@@ -18,7 +18,7 @@ services:
       - "traefik.enable=true"
       - "traefik.nexus.port=80"
       - "traefik.nexus.backend=nexus"
-      - "traefik.nexus.frontend.rule=Host:nexus.unterrainer.info"
+      - "traefik.nexus.frontend.rule=Host:nexus-app.unterrainer.info"
       - "traefik.nexus.frontend.entryPoints=http,https"
 
   keycloak:
