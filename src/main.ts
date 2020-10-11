@@ -27,7 +27,7 @@ const i18n = new VueI18n({
 Vue.use(VueAxios, axios)
 
 const initOptions = {
-  url: 'http://keycloak.unterrainer.info/auth', realm: 'Nexus', clientId: 'Nexus'
+  url: 'https://keycloak.unterrainer.info/auth', realm: 'Nexus', clientId: 'Nexus'
 }
 
 const keycloak = Keycloak(initOptions)
