@@ -3,7 +3,6 @@
     <v-app>
       <v-navigation-drawer
         v-cloak
-        v-if="getShowCondition()"
         color="secondary"
         app
         v-model="twoWayDrawerVisible"
@@ -21,7 +20,6 @@
         short
         dense
         color="primary"
-        v-if="getShowCondition()"
       >
         <v-app-bar-nav-icon
           @click="toggleDrawerVisible"
@@ -127,9 +125,6 @@ export default {
   },
 
   methods: {
-    getShowCondition () {
-      return this.$route.name && this.$route.name !== 'landingpage'
-    },
     goto (destination) {
       if (this.$router.currentRoute.path !== destination) {
         this.$router.push(destination)

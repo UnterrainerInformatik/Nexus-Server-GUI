@@ -6,19 +6,13 @@ Vue.use(VueRouter)
 const routes: Array<RouteConfig> = [
   {
     path: '/',
-    redirect: '/app/landingpage'
+    redirect: '/app/main'
   },
   {
     path: '/app/main',
     alias: '/',
     name: 'main',
     component: () => import('../views/Main.vue')
-  },
-  {
-    path: '/app/landingpage',
-    alias: '/',
-    name: 'landingpage',
-    component: () => import('../views/LandingPage.vue')
   },
   {
     path: '/settings/preferences',
