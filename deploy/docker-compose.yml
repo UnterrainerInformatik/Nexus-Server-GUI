@@ -40,7 +40,7 @@ services:
       - KEYCLOAK_HOSTNAME=keycloak.unterrainer.info
     command: ["-b", "0.0.0.0", "-Dkeycloak.profile.feature.docker=enabled"]
     volumes:
-      - "/app/deploy/keycloak-nexus/keycloak-theme:/opt/jboss/keycloak/themes/nexus-theme"
+      - "/app/deploy/nexus-server-gui/keycloak-theme:/opt/jboss/keycloak/themes/nexus-theme"
     labels:
       - "traefik.enable=true"
       - "traefik.keycloak.port=8080"
