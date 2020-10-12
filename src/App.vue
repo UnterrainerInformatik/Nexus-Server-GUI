@@ -46,13 +46,7 @@
           z-index="1000"
         >
           <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              icon
-              href="https://nexus.unterrainer.info"
-              @click="logout()"
-              v-bind="attrs"
-              v-on="on"
-            >
+            <v-btn icon @click="logout()" v-bind="attrs" v-on="on">
               <v-icon color="white">power_settings_new</v-icon>
             </v-btn>
           </template>
@@ -131,6 +125,7 @@ export default {
       // Clear token buffers in keycloak-client.
       const keycloak = this.$store.state.keycloak
       keycloak.logout().then(() => keycloak.clearToken())
+      window.location.href = 'https://nexus.unterrainer.info'
     },
     goto (destination) {
       if (this.$router.currentRoute.path !== destination) {
