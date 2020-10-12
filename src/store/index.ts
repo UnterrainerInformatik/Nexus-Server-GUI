@@ -13,18 +13,29 @@ const store = new Vuex.Store({
   },
 
   state: () => ({
-    version: '0.0.1'
+    version: '0.0.1',
+    keycloak: null
   }),
 
   mutations: {
+    keycloak (state, value) {
+      state.keycloak = value
+    }
   },
 
   actions: {
+    keycloak (context, value) {
+      context.commit('keycloak', value)
+      return Promise.resolve()
+    }
   },
 
   getters: {
     version: state => {
       return state.version
+    },
+    keycloak: state => {
+      return state.keycloak
     }
   }
 })

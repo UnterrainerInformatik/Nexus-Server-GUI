@@ -13,14 +13,7 @@
         <nav-drawer></nav-drawer>
       </v-navigation-drawer>
 
-      <v-app-bar
-        v-cloak
-        app
-        clipped-left
-        short
-        dense
-        color="primary"
-      >
+      <v-app-bar v-cloak app clipped-left short dense color="primary">
         <v-app-bar-nav-icon
           @click="toggleDrawerVisible"
           class="hidden-md-and-up"
@@ -53,7 +46,13 @@
           z-index="1000"
         >
           <template v-slot:activator="{ on, attrs }">
-            <v-btn icon href="https://nexus.unterrainer.info" v-bind="attrs" v-on="on">
+            <v-btn
+              icon
+              href="https://nexus.unterrainer.info"
+              @click="logout()"
+              v-bind="attrs"
+              v-on="on"
+            >
               <v-icon color="white">power_settings_new</v-icon>
             </v-btn>
           </template>
@@ -125,6 +124,14 @@ export default {
   },
 
   methods: {
+    logout () {
+      // Clear local-storage.
+      localStorage.removeItem('vue-token')
+      localStorage.removeItem('vue-refresh-token')
+      // Clear token buffers in keycloak-client.
+      const keycloak = this.$store.state.keycloak
+      keycloak.logout().then(() => keycloak.clearToken())
+    },
     goto (destination) {
       if (this.$router.currentRoute.path !== destination) {
         this.$router.push(destination)
