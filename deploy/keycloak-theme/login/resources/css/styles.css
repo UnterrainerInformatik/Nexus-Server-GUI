@@ -1,23 +1,28 @@
 .login-pf body {
   background: black none;
-  background-image: url('../img/Nexus.png');
-  background-position: center center;
+  background-image: url('../img/logo.png');
+  background-position: top left;
   background-attachment: fixed;
-  background-size: cover;
+  background-size: 300px 80px;
   background-repeat: no-repeat;
 }
 
 .login-pf-page .card-pf {
-  background-color: #6B0C37;
+  background-color: #6b0c37;
+}
+
+.login-pf-header {
+  color: white;
 }
 
 /* Change 'content' to change the title of the page*/
 div#kc-header::after {
+  content: '';
 }
 
 /*title banner size and colour*/
 div#kc-header-wrapper {
-  background-color: #6B0C37;
+  background-color: transparent;
 }
 
 /* label change Username, Password text*/
@@ -26,13 +31,14 @@ div#kc-form label {
 }
 
 /*fields*/
-.login-pf-page input[type=text], input[type=password] {
+.login-pf-page input[type='text'],
+.login-pf-page input[type='password'] {
   color: #ddd;
 }
 
 /*button*/
-.login-pf-page input[type=submit] {
-  background-color: #9575CD;
+div#kc-form-buttons input[type='submit'] {
+  background-color: #9575cd;
   color: white;
   text-transform: uppercase;
 }
