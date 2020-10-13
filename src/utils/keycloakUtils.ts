@@ -26,7 +26,9 @@ export default {
     console.log(token)
     if (token !== undefined) {
       store.commit('keycloak/realmRoles', token.realm_access.roles)
-      store.commit('keycloak/clientRoles', token.resource_access[token.azp].roles)
+      if (token.resource_access.includes(token.azp)) {
+        store.commit('keycloak/clientRoles', token.resource_access[token.azp].roles)
+      }
       store.commit('keycloak/givenName', token.given_name)
       store.commit('keycloak/familyName', token.family_name)
       store.commit('keycloak/email', token.email)

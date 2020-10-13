@@ -1,5 +1,5 @@
 .login-pf body {
-  background: url('../img/logo.png') no-repeat scroll left 2vh black;
+  background: url('../img/logo.png') no-repeat scroll 15% 14vh black;
   background-attachment: fixed;
   background-size: 300px 80px;
 }
@@ -41,6 +41,6 @@ div#kc-header {
 div#kc-locale {
   font-size: larger;
 }
-a {
+#kc-locale-dropdown a, a {
   color: #d1c4e9;
 }

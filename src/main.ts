@@ -64,8 +64,9 @@ keycloak.init({
       console.error('Failed to refresh token.')
     })
   }, 60000)
-}).catch(() => {
-  console.error('Authentication failed.')
+}).catch((e) => {
+  // console.error('Authentication failed.')
+  console.error(e)
   keycloakUtils.reset()
 })
 
