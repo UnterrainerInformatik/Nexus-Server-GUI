@@ -1,4 +1,4 @@
-body {
+.login-pf body {
   background: black none;
   background-image: url('../img/Nexus.png');
   background-position: center center;
@@ -7,7 +7,7 @@ body {
   background-repeat: no-repeat;
 }
 
-card-pf {
+.login-pf-page .card-pf {
   background-color: #6B0C37;
 }
 
@@ -16,7 +16,7 @@ div#kc-header::after {
 }
 
 /*title banner size and colour*/
-div#kc-header {
+div#kc-header-wrapper {
   background-color: #6B0C37;
 }
 
@@ -26,12 +26,12 @@ div#kc-form label {
 }
 
 /*fields*/
-input[type=text], input[type=password] {
+.login-pf-page input[type=text], input[type=password] {
   color: #ddd;
 }
 
 /*button*/
-input[type=submit] {
+.login-pf-page input[type=submit] {
   background-color: #9575CD;
   color: white;
   text-transform: uppercase;
