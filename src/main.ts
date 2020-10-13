@@ -15,6 +15,7 @@ import VueAxios from 'vue-axios'
 import VueGoogleCharts from 'vue-google-charts'
 
 import Keycloak from 'keycloak-js'
+import keycloakUtils from '@/utils/keycloakUtils'
 
 Vue.config.productionTip = false
 
@@ -26,48 +27,32 @@ const i18n = new VueI18n({
 })
 Vue.use(VueAxios, axios)
 
-function persistTokens (keycloak) {
-  console.log('Saving tokens.')
-  if (keycloak.token !== undefined) {
-    localStorage.setItem('vue-token', keycloak.token)
-  } else {
-    console.warn('"keycloak.token" is undefined.')
-  }
-  if (keycloak.refreshToken !== undefined) {
-    localStorage.setItem('vue-refresh-token', keycloak.refreshToken)
-  } else {
-    console.warn('"keycloak.refreshToken" is undefined.')
-  }
-}
-
-const lsToken = localStorage.getItem('vue-token') ?? undefined
-const lsRefreshToken = localStorage.getItem('vue-refresh-token') ?? undefined
-const initOptions = {
-  url: 'https://keycloak.unterrainer.info/auth', realm: 'Nexus', clientId: 'Nexus'
-}
-const keycloak = Keycloak(initOptions)
+const keycloak = Keycloak({
+  url: store.getters['keycloak/host'],
+  realm: store.getters['keycloak/realm'],
+  clientId: store.getters['keycloak/client']
+})
 
 keycloak.init({
   onLoad: 'login-required',
   checkLoginIframe: false,
-  token: lsToken,
-  refreshToken: lsRefreshToken
+  token: localStorage.getItem('kc-token') ?? undefined,
+  refreshToken: localStorage.getItem('kc-refresh-token') ?? undefined
 }).then((auth) => {
   if (!auth) {
     console.log('Authentication failed. Deleting localStorate tokens.')
-    localStorage.removeItem('vue-token')
-    localStorage.removeItem('vue-refresh-token')
+    keycloakUtils.reset()
     window.location.reload()
   } else {
     console.log('Authenticated')
-    persistTokens(keycloak)
+    keycloakUtils.persist(keycloak)
   }
 
   setInterval(() => {
     keycloak.updateToken(70).then((refreshed) => {
       if (refreshed) {
         console.log('Token refreshed. Persisting.')
-        persistTokens(keycloak)
+        keycloakUtils.persist(keycloak)
       } else {
         if (keycloak.tokenParsed !== undefined && keycloak.tokenParsed.exp !== undefined && keycloak.timeSkew !== undefined) {
           console.warn('Token not refreshed, valid for ' + Math.round(keycloak.tokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000) + ' seconds')
@@ -81,6 +66,7 @@ keycloak.init({
   }, 60000)
 }).catch(() => {
   console.error('Authentication failed.')
+  keycloakUtils.reset()
 })
 
 new Vue({
@@ -91,4 +77,4 @@ new Vue({
   render: h => h(App)
 }).$mount('#app')
 
-store.commit('keycloak', keycloak)
+store.commit('keycloak/instance', keycloak)

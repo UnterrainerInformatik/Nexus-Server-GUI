@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import gui from '@/store/gui'
 import rest from '@/store/rest'
+import keycloak from '@/store/keycloak'
 
 Vue.use(Vuex)
 
@@ -9,7 +10,8 @@ const store = new Vuex.Store({
 
   modules: {
     gui,
-    rest
+    rest,
+    keycloak
   },
 
   state: () => ({
