@@ -46,7 +46,9 @@ export default {
   },
   logout: function () {
     const keycloak = store.getters['keycloak/instance']
-    keycloak.logout().then(() => keycloak.clearToken())
+    if (keycloak != null) {
+      keycloak.logout().then(() => keycloak.clearToken())
+    }
     this.reset()
   }
 }
