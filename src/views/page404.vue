@@ -1,11 +1,31 @@
+<template>
+  <div class="NotFound">
+    <v-container>
+      <v-layout row wrap>
+        <v-flex xs12>
+          <v-card height="400" color="transparent" flat>
+            <div class="display-3 mt-5">Page not found.</div>
+            <div class="grey--text lighten-5">
+              The page you are trying to get to never existed in this reality,
+              or has migrated to a parallel universe.
+            </div>
+            <div class="paragraph-text mt-2">
+              <br />
+              <br />Try going back to home page and repeating your action. Or,
+              contact helpdesk for support.
+            </div>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </div>
+</template>
 
-<html>
-<head><title>404 Not Found</title></head>
-<body>
-<center><h1>404 Not Found</h1></center>
-<hr><center>nexus-server-gui</center>
-</body>
-</html>
+<style>
+.paragraph-text {
+  font-size: 18px;
+}
+</style>
 <!-- a padding to disable MSIE and Chrome friendly error page -->
 <!-- a padding to disable MSIE and Chrome friendly error page -->
 <!-- a padding to disable MSIE and Chrome friendly error page -->

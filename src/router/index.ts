@@ -10,7 +10,6 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: '/app/main',
-    alias: '/',
     name: 'main',
     component: () => import('../views/Main.vue')
   },
@@ -25,7 +24,8 @@ const routes: Array<RouteConfig> = [
     component: () => import('../views/About.vue')
   },
   {
-    path: '/*',
+    path: '/:catchAll(.*)',
+    name: 'catchAll',
     component: () => import('../views/page404.vue')
   }
 ]
