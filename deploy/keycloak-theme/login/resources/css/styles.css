@@ -9,6 +9,7 @@
 
 .login-pf-page .card-pf {
   background-color: #6b0c37;
+  margin-top: 30%;
 }
 
 .login-pf-header {
@@ -37,8 +38,17 @@ div#kc-form label {
 }
 
 /*button*/
-div#kc-form-buttons input[type='submit'] {
+.login-pf-page input[type='submit'] {
   background-color: #9575cd;
-  color: white;
-  text-transform: uppercase;
+  background-image: none;
+  border-color: #d1c4e9;
+}
+div#kc-header {
+  display: none;
+}
+#kc-locale-dropdown a {
+  color: #d1c4e9;
+}
+a {
+  color: #d1c4e9;
 }
