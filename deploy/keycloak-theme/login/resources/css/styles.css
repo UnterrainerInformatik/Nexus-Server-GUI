@@ -1,3 +1,38 @@
-.login-pf body {
-  background: DimGrey none;
+body {
+  background: black none;
+  background-image: url('../img/Nexus.png');
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+card-pf {
+  background-color: #6B0C37;
+}
+
+/* Change 'content' to change the title of the page*/
+div#kc-header::after {
+}
+
+/*title banner size and colour*/
+div#kc-header {
+  background-color: #6B0C37;
+}
+
+/* label change Username, Password text*/
+div#kc-form label {
+  color: white !important;
+}
+
+/*fields*/
+input[type=text], input[type=password] {
+  color: #ddd;
+}
+
+/*button*/
+input[type=submit] {
+  background-color: #9575CD;
+  color: white;
+  text-transform: uppercase;
 }
