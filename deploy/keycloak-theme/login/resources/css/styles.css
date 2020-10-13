@@ -1,10 +1,7 @@
 .login-pf body {
-  background: black none;
-  background-image: url('../img/logo.png');
-  background-position: top left;
+  background: url('../img/logo.png') no-repeat scroll left 2vh black;
   background-attachment: fixed;
   background-size: 300px 80px;
-  background-repeat: no-repeat;
 }
 
 .login-pf-page .card-pf {
@@ -41,8 +38,8 @@ div#kc-form label {
 div#kc-header {
   display: none;
 }
-#kc-locale-dropdown a {
-  color: #d1c4e9;
+div#kc-locale {
+  font-size: larger;
 }
 a {
   color: #d1c4e9;
