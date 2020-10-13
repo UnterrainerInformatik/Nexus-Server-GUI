@@ -16,11 +16,6 @@
   color: white;
 }
 
-/* Change 'content' to change the title of the page*/
-div#kc-header::after {
-  content: '';
-}
-
 /*title banner size and colour*/
 div#kc-header-wrapper {
   background-color: transparent;
