@@ -64,11 +64,13 @@ export default {
       {
         icon: 'house',
         key: 'mnu.main',
+        role: null,
         subs: [
           {
             link: '/app/main',
             icon: 'home',
-            key: 'pageTitle.main'
+            key: 'pageTitle.main',
+            role: null
           }
         ]
       }

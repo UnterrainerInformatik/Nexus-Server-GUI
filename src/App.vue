@@ -72,6 +72,7 @@ import NavDrawer from '@/components/NavDrawer.vue'
 import AppBarMenu from '@/components/AppBarMenu.vue'
 import Snackbar from '@/components/Snackbar.vue'
 import ModalLoading from '@/components/ModalLoading.vue'
+import keycloakUtils from '@/utils/keycloakUtils'
 
 export default {
   name: 'Main',
@@ -119,12 +120,7 @@ export default {
 
   methods: {
     logout () {
-      // Clear local-storage.
-      localStorage.removeItem('vue-token')
-      localStorage.removeItem('vue-refresh-token')
-      // Clear token buffers in keycloak-client.
-      const keycloak = this.$store.state.keycloak
-      keycloak.logout().then(() => keycloak.clearToken())
+      keycloakUtils.logout()
       window.location.href = 'https://nexus.unterrainer.info'
     },
     goto (destination) {

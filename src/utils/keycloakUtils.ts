@@ -43,5 +43,10 @@ export default {
     store.commit('keycloak/email', '')
     store.commit('keycloak/emailVerified', false)
     removeTokensFromLocalStorage()
+  },
+  logout: function () {
+    const keycloak = store.getters['keycloak/instance']
+    keycloak.logout().then(() => keycloak.clearToken())
+    this.reset()
   }
 }
