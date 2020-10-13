@@ -3,9 +3,9 @@ const store = {
   namespaced: true,
 
   state: () => ({
-    host: process.env.VUE_APP_KEYCLOAK_HOST ? process.env.VUE_APP_KEYCLOAK_HOST : 'https://keycloak.lan.elite-zettl.at/auth',
-    realm: process.env.VUE_APP_KEYCLOAK_REALM ? process.env.VUE_APP_KEYCLOAK_REALM : 'Cms',
-    client: process.env.VUE_APP_KEYCLOAK_CLIENT ? process.env.VUE_APP_KEYCLOAK_CLIENT : 'CMS',
+    host: process.env.VUE_APP_KEYCLOAK_HOST ? process.env.VUE_APP_KEYCLOAK_HOST : 'https://keycloak.unterrainer.info/auth',
+    realm: process.env.VUE_APP_KEYCLOAK_REALM ? process.env.VUE_APP_KEYCLOAK_REALM : 'Nexus',
+    client: process.env.VUE_APP_KEYCLOAK_CLIENT ? process.env.VUE_APP_KEYCLOAK_CLIENT : 'Nexus',
     instance: null,
     realmRoles: [],
     clientRoles: [],
