@@ -44,6 +44,14 @@ keycloak.init({
     keycloakUtils.reset()
     window.location.reload()
   } else {
+    new Vue({
+      vuetify,
+      i18n,
+      store,
+      router,
+      render: h => h(App)
+    }).$mount('#app')
+
     console.log('Authenticated')
     keycloakUtils.persist(keycloak)
   }
@@ -68,13 +76,5 @@ keycloak.init({
   console.error('Authentication failed.')
   keycloakUtils.reset()
 })
-
-new Vue({
-  vuetify,
-  i18n,
-  store,
-  router,
-  render: h => h(App)
-}).$mount('#app')
 
 store.commit('keycloak/instance', keycloak)
