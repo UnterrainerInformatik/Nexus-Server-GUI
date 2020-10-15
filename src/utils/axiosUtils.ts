@@ -60,14 +60,19 @@ async function internalRestCall (workingIndicator, responseSetter, restCallPromi
   }))
 }
 
+function getAuthorizationHeader () {
+  const token = store.getters['keycloak/token']
+  if (token == null || token === undefined || token === '') {
+    return {}
+  }
+  return { Authorization: 'Bearer ' + token }
+}
+
 async function internalGet (server, endpointPath) {
   // console.log(buildBaseUrl(server) + endpointPath)
-  const token = store.getters['keycloak/token']
   return Vue.axios
     .get(buildBaseUrl(server) + endpointPath, {
-      headers: {
-        Authorization: token != null && token !== undefined && token !== '' ? 'Bearer ' + token : null
-      }
+      headers: Object.assign({}, getAuthorizationHeader())
     })
     .then(response => {
       return response.data
@@ -75,14 +80,11 @@ async function internalGet (server, endpointPath) {
 }
 
 async function internalDelete (server, endpointPath) {
-  const token = store.getters['keycloak/token']
   return Vue.axios
     .delete(buildBaseUrl(server) + endpointPath, {
       data: {
       },
-      headers: {
-        Authorization: token != null && token !== undefined && token !== '' ? 'Bearer ' + token : null
-      }
+      headers: Object.assign({}, getAuthorizationHeader())
     })
     .then(response => {
       return response.data
@@ -91,12 +93,9 @@ async function internalDelete (server, endpointPath) {
 
 async function internalPut (server, endpointPath, dataProvider) {
   // console.log(buildBaseUrl(server) + endpointPath)
-  const token = store.getters['keycloak/token']
   return Vue.axios
     .put(buildBaseUrl(server) + endpointPath, provideData(dataProvider), {
-      headers: {
-        Authorization: token != null && token !== undefined && token !== '' ? 'Bearer ' + token : null
-      }
+      headers: Object.assign({}, getAuthorizationHeader())
     })
     .then(response => {
       return response.data
@@ -105,12 +104,9 @@ async function internalPut (server, endpointPath, dataProvider) {
 
 async function internalPost (server, endpointPath, dataProvider) {
   // console.log(buildBaseUrl(server) + endpointPath)
-  const token = store.getters['keycloak/token']
   return Vue.axios
     .post(buildBaseUrl(server) + endpointPath, provideData(dataProvider), {
-      headers: {
-        Authorization: token != null && token !== undefined && token !== '' ? 'Bearer ' + token : null
-      }
+      headers: Object.assign({}, getAuthorizationHeader())
     })
     .then(response => {
       return response.data
