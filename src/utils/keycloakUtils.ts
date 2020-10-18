@@ -27,7 +27,7 @@ export default {
     if (token !== undefined) {
       store.commit('keycloak/token', keycloak.token)
       store.commit('keycloak/realmRoles', token.realm_access.roles)
-      if (token.resource_access.includes(token.azp)) {
+      if (token.resource_access && token.resource_access[token.azp]) {
         store.commit('keycloak/clientRoles', token.resource_access[token.azp].roles)
       }
       store.commit('keycloak/givenName', token.given_name)
