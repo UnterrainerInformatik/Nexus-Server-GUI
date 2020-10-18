@@ -46,6 +46,14 @@ keycloak.init({
   } else {
     console.log('Authenticated')
     keycloakUtils.persist(keycloak)
+
+    new Vue({
+      vuetify,
+      i18n,
+      store,
+      router,
+      render: h => h(App)
+    }).$mount('#app')
   }
 
   setInterval(() => {
@@ -69,13 +77,5 @@ keycloak.init({
   console.error(e)
   keycloakUtils.reset()
 })
-
-new Vue({
-  vuetify,
-  i18n,
-  store,
-  router,
-  render: h => h(App)
-}).$mount('#app')
 
 store.commit('keycloak/instance', keycloak)

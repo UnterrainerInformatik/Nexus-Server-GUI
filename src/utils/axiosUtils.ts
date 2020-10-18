@@ -60,12 +60,19 @@ async function internalRestCall (workingIndicator, responseSetter, restCallPromi
   }))
 }
 
+function getAuthorizationHeader () {
+  const token = store.getters['keycloak/token']
+  if (token == null || token === undefined || token === '') {
+    return {}
+  }
+  return { Authorization: 'Bearer ' + token }
+}
+
 async function internalGet (server, endpointPath) {
   // console.log(buildBaseUrl(server) + endpointPath)
   return Vue.axios
     .get(buildBaseUrl(server) + endpointPath, {
-      headers: {
-      }
+      headers: Object.assign({}, getAuthorizationHeader())
     })
     .then(response => {
       return response.data
@@ -77,8 +84,7 @@ async function internalDelete (server, endpointPath) {
     .delete(buildBaseUrl(server) + endpointPath, {
       data: {
       },
-      headers: {
-      }
+      headers: Object.assign({}, getAuthorizationHeader())
     })
     .then(response => {
       return response.data
@@ -89,8 +95,7 @@ async function internalPut (server, endpointPath, dataProvider) {
   // console.log(buildBaseUrl(server) + endpointPath)
   return Vue.axios
     .put(buildBaseUrl(server) + endpointPath, provideData(dataProvider), {
-      headers: {
-      }
+      headers: Object.assign({}, getAuthorizationHeader())
     })
     .then(response => {
       return response.data
@@ -101,8 +106,7 @@ async function internalPost (server, endpointPath, dataProvider) {
   // console.log(buildBaseUrl(server) + endpointPath)
   return Vue.axios
     .post(buildBaseUrl(server) + endpointPath, provideData(dataProvider), {
-      headers: {
-      }
+      headers: Object.assign({}, getAuthorizationHeader())
     })
     .then(response => {
       return response.data

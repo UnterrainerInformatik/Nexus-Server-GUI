@@ -3,10 +3,11 @@ const store = {
   namespaced: true,
 
   state: () => ({
-    host: process.env.VUE_APP_KEYCLOAK_HOST ? process.env.VUE_APP_KEYCLOAK_HOST : 'https://keycloak.unterrainer.info/auth',
-    realm: process.env.VUE_APP_KEYCLOAK_REALM ? process.env.VUE_APP_KEYCLOAK_REALM : 'Nexus',
-    client: process.env.VUE_APP_KEYCLOAK_CLIENT ? process.env.VUE_APP_KEYCLOAK_CLIENT : 'Nexus',
+    host: process.env.VUE_APP_KEYCLOAK_HOST ? process.env.VUE_APP_KEYCLOAK_HOST : 'https://keycloak.lan.elite-zettl.at/auth',
+    realm: process.env.VUE_APP_KEYCLOAK_REALM ? process.env.VUE_APP_KEYCLOAK_REALM : 'Cms',
+    client: process.env.VUE_APP_KEYCLOAK_CLIENT ? process.env.VUE_APP_KEYCLOAK_CLIENT : 'CMS',
     instance: null,
+    token: '',
     realmRoles: [],
     clientRoles: [],
     givenName: '',
@@ -27,6 +28,9 @@ const store = {
     },
     instance (state, value) {
       state.instance = value
+    },
+    token (state, value) {
+      state.token = value
     },
     realmRoles (state, value) {
       state.realmRoles = value
@@ -63,6 +67,10 @@ const store = {
     },
     instance (context, value) {
       context.commit('instance', value)
+      return Promise.resolve()
+    },
+    token (context, value) {
+      context.commit('token', value)
       return Promise.resolve()
     },
     realmRoles (context, value) {
@@ -103,6 +111,9 @@ const store = {
     },
     instance: state => {
       return state.instance
+    },
+    token: state => {
+      return state.token
     },
     realmRoles: state => {
       return state.realmRoles

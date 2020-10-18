@@ -25,6 +25,7 @@ export default {
     const token = keycloak.tokenParsed
     console.log(token)
     if (token !== undefined) {
+      store.commit('keycloak/token', keycloak.token)
       store.commit('keycloak/realmRoles', token.realm_access.roles)
       if (token.resource_access.includes(token.azp)) {
         store.commit('keycloak/clientRoles', token.resource_access[token.azp].roles)
@@ -38,6 +39,7 @@ export default {
   },
   reset: function () {
     store.commit('keycloak/instance', null)
+    store.commit('keycloak/token')
     store.commit('keycloak/realmRoles', [])
     store.commit('keycloak/clientRoles', [])
     store.commit('keycloak/givenName', '')
