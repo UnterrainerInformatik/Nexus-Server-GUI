@@ -36,8 +36,8 @@ const keycloak = Keycloak({
 keycloak.init({
   onLoad: 'login-required',
   checkLoginIframe: false,
-  token: localStorage.getItem('kc-token') ?? undefined,
-  refreshToken: localStorage.getItem('kc-refresh-token') ?? undefined
+  token: keycloakUtils.getTokenFromLocalStorage(),
+  refreshToken: keycloakUtils.getRefreshTokenFromLocalStorage()
 }).then((auth) => {
   if (!auth) {
     console.log('Authentication failed. Deleting localStorate tokens.')
