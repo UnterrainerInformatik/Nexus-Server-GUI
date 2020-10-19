@@ -1,11 +1,13 @@
 import store from '@/store'
 
-function removeTokensFromLocalStorage () {
+async function removeTokensFromLocalStorage () {
+  console.log('Removing keycloak tokens from local storage.')
   localStorage.removeItem('kc-token')
   localStorage.removeItem('kc-refresh-token')
+  return Promise.resolve()
 }
 
-function persistTokensToLocalStorage (keycloak) {
+async function persistTokensToLocalStorage (keycloak) {
   console.log('Saving tokens.')
   if (keycloak.token !== undefined) {
     localStorage.setItem('kc-token', keycloak.token)
@@ -17,10 +19,27 @@ function persistTokensToLocalStorage (keycloak) {
   } else {
     console.warn('"keycloak.refreshToken" is undefined.')
   }
+  return Promise.resolve()
 }
 
 export default {
-  persist: function (keycloak) {
+  getTokenFromLocalStorage: function () {
+    const token = localStorage.getItem('kc-token')
+    if (token == null || token === undefined) {
+      console.log('Keycloak token persisted in local storage is missing.')
+      return undefined
+    }
+    return token
+  },
+  getRefreshTokenFromLocalStorage: function () {
+    const token = localStorage.getItem('kc-refresh-token')
+    if (token == null || token === undefined) {
+      console.log('Keycloak refresh-token persisted in local storage is missing.')
+      return undefined
+    }
+    return token
+  },
+  persist: async function (keycloak) {
     store.commit('keycloak/instance', keycloak)
     const token = keycloak.tokenParsed
     console.log(token)
@@ -35,9 +54,9 @@ export default {
       store.commit('keycloak/email', token.email)
       store.commit('keycloak/emailVerified', token.email_verified)
     }
-    persistTokensToLocalStorage(keycloak)
+    return persistTokensToLocalStorage(keycloak)
   },
-  reset: function () {
+  reset: async function () {
     store.commit('keycloak/instance', null)
     store.commit('keycloak/token')
     store.commit('keycloak/realmRoles', [])
@@ -46,13 +65,14 @@ export default {
     store.commit('keycloak/familyName', '')
     store.commit('keycloak/email', '')
     store.commit('keycloak/emailVerified', false)
-    removeTokensFromLocalStorage()
+    return removeTokensFromLocalStorage()
   },
-  logout: function () {
+  logout: async function () {
+    const promise = this.reset()
     const keycloak = store.getters['keycloak/instance']
     if (keycloak != null) {
-      keycloak.logout().then(() => keycloak.clearToken())
+      return promise.then(() => keycloak.logout()).then(() => keycloak.clearToken()).then(() => this.reset())
     }
-    this.reset()
+    return promise
   }
 }

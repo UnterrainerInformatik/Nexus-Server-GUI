@@ -120,8 +120,9 @@ export default {
 
   methods: {
     logout () {
-      keycloakUtils.logout()
-      window.location.href = 'https://nexus.unterrainer.info'
+      keycloakUtils.logout().then(() => {
+        window.location.href = 'https://nexus.unterrainer.info'
+      })
     },
     goto (destination) {
       if (this.$router.currentRoute.path !== destination) {
