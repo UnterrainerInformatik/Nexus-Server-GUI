@@ -39,7 +39,12 @@
           dense
           v-for="(lang, i) in Object.keys($i18n.messages)"
           :key="`Lang${i}`"
-          @click="$i18n.locale = lang"
+          @click="
+            () => {
+              $i18n.locale = lang
+              setLocalStorage('lang', lang)
+            }
+          "
           active-class="v-list-item--active"
           :class="$i18n.locale === lang ? 'v-list-item--active' : ''"
         >
@@ -120,6 +125,12 @@ export default {
       tooltips: 'tooltips',
       openDelay: 'openDelay'
     })
+  },
+
+  methods: {
+    setLocalStorage (key, value) {
+      localStorage.setItem(key, value)
+    }
   }
 }
 </script>

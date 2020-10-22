@@ -132,6 +132,13 @@ export default {
     ...mapActions('gui', {
       toggleDrawerVisible: 'toggleDrawerVisible'
     })
+  },
+
+  mounted () {
+    const lang = localStorage.getItem('lang')
+    if (lang != null && lang !== undefined) {
+      this.$i18n.locale = lang
+    }
   }
 
 }
