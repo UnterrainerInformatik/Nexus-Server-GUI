@@ -24,7 +24,9 @@ const store = {
         crontab: {
           runs: '/crontab/runs'
         },
-        logs: '/logs'
+        logs: '/logs',
+        users: '/users',
+        preferences: '/preferences'
       }
     }
   }),

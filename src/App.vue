@@ -139,8 +139,11 @@ export default {
     if (lang != null && lang !== undefined) {
       this.$i18n.locale = lang
     }
+    const dark = localStorage.getItem('dark')
+    if (dark != null && dark !== undefined) {
+      this.$vuetify.theme.dark = dark
+    }
   }
-
 }
 </script>
 
