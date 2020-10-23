@@ -1,6 +1,10 @@
 import store from '@/store'
 import { getList, post, put } from '@/utils/axiosUtils'
 
+function isValidResult (response) {
+  return response != null && response !== undefined && response.entries.size() > 0
+}
+
 export default {
   load: async function (userName) {
     return this.loadUser(userName).then(() => {
@@ -18,7 +22,7 @@ export default {
    */
   loadUser: async function (userName) {
     return getList('nexus', 'users', 1, 0, () => { return undefined }, () => { return undefined }, `&userName=${encodeURIComponent(userName)}`).then((response) => {
-      if (response != null && response !== undefined && response.entries.size() > 0) {
+      if (isValidResult(response)) {
         const user = response.entries[0]
         store.dispatch('preferences/userId', user.userId)
         store.dispatch('preferences/userName', user.userName)
@@ -41,7 +45,7 @@ export default {
    */
   loadPreferences: async function (userName) {
     return getList('nexus', 'preferences', 1, 0, () => { return undefined }, () => { return undefined }, `&userName=${encodeURIComponent(userName)}`).then((response) => {
-      if (response != null && response !== undefined && response.entries.size() > 0) {
+      if (isValidResult(response)) {
         const pref = response.entries[0]
         store.dispatch('preferences/darktheme', pref.darkTheme)
         store.dispatch('preferences/languageKey', pref.languageKey)
@@ -53,34 +57,39 @@ export default {
    * Persists the user stored in VUEX to the REST-service.
    */
   saveUser: async function () {
-
-  }
+    const userId = store.getters['preferences/userId']
+    return put('nexus', 'users', userId, () => { return undefined }, () => { return {
+      userId: userId,
+      userName: store.getters['preferences/userName'],
+      client: store.getters['preferences/client'],
+      givenName: store.getters['preferences/givenName'],
+      familyName: store.getters['preferences/familyName'],
+      email: store.getters['preferences/email'],
+      emailVerified: store.getters['preferences/emailVerified'],
+      realmRoles: store.getters['preferences/realmRoles'],
+      clientRoles: store.getters['preferences/clientRoles'],
+      isActive: store.getters['preferences/isActive'],
+      isBearer: store.getters['preferences/isBearer']
+    } }, () => { return undefined })
+  },
   /**
    * Persists the preferences stored in VUEX to the REST-service.
    */
   savePreferences: async function () {
+    const userName = store.getters['preferences/userName']
     return getList('nexus', 'preferences', 1, 0, () => { return undefined }, () => { return undefined }, `&userName=${encodeURIComponent(userName)}`).then((response) => {
-      if (response == null || response === undefined || response.entries.size() == 0) {
-        // Make new.
+      if (isValidResult(response)) {
+        // Update old.
         const entity = response.entries[0]
-        if (lang != null && lang !== undefined) {
-          entity.languageKey = lang
-        }
-        if (dark != null && dark !== undefined) {
-          entity.darkTheme = dark
-        }
-        return getList('nexus', 'users', 1, 0, () => { return undefined }, () => { return undefined }, `&userName=${encodeURIComponent(userName)}`).then((response) => {
-          if (response == null || response === undefined || response.entries.size() == 0) {
-            return null
-          }
-          return post('nexus', 'preferences', () => { return undefined }, () => { return entity }, () => { return undefined })
-        })
+        entity.languageKey = store.getters['preferences/languageKey']
+        entity.darkTheme = store.getters['preferences/darkTheme']
+        return put('nexus', 'preferences', entity.id, () => { return undefined }, () => { return entity }, () => { return undefined })
       }
-      // Update old.
-      const entity = response.entries[0]
-      entity.languageKey = lang
-      entity.darkTheme = dark
-      return put('nexus', 'preferences', entity.id, () => { return undefined }, () => { return entity }, () => { return undefined })
+      // Make new.
+      return post('nexus', 'preferences', () => { return undefined }, () => { return {
+        languageKey: store.getters['preferences/languageKey'],
+        darkTheme: store.getters['preferences/darkTheme']
+      } }, () => { return undefined })
     })
   }
 }
