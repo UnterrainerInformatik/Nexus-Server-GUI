@@ -6,9 +6,9 @@ function isValidResult (response) {
 }
 
 export default {
-  load: async function (userName) {
-    return this.loadUser(userName).then(() => {
-      return this.loadPreferences(userName)
+  load: async function () {
+    return this.loadUser().then(() => {
+      return this.loadPreferences()
     })
   },
   save: async function () {
@@ -20,8 +20,9 @@ export default {
    * Loads the user from the REST-service into VUEX.
    * @param userName the userName to load the user-object for
    */
-  loadUser: async function (userName) {
-    return getList('nexus', 'users', 1, 0, () => { return undefined }, () => { return undefined }, `&userName=${encodeURIComponent(userName)}`).then((response) => {
+  loadUser: async function () {
+    const userName = store.getters['keycloak/email']
+    return getList('uinf', 'users', 1, 0, () => { return undefined }, () => { return undefined }, `&userName=${encodeURIComponent(userName)}`).then((response) => {
       if (isValidResult(response)) {
         const user = response.entries[0]
         store.dispatch('preferences/userId', user.userId)
@@ -43,8 +44,9 @@ export default {
    * Loads the preferences from the REST-service into VUEX.
    * @param userName the userName to load the preferences-object for
    */
-  loadPreferences: async function (userName) {
-    return getList('nexus', 'preferences', 1, 0, () => { return undefined }, () => { return undefined }, `&userName=${encodeURIComponent(userName)}`).then((response) => {
+  loadPreferences: async function () {
+    const userName = store.getters['keycloak/email']
+    return getList('uinf', 'preferences', 1, 0, () => { return undefined }, () => { return undefined }, `&userName=${encodeURIComponent(userName)}`).then((response) => {
       if (isValidResult(response)) {
         const pref = response.entries[0]
         store.dispatch('preferences/darktheme', pref.darkTheme)
@@ -58,38 +60,44 @@ export default {
    */
   saveUser: async function () {
     const userId = store.getters['preferences/userId']
-    return put('nexus', 'users', userId, () => { return undefined }, () => { return {
-      userId: userId,
-      userName: store.getters['preferences/userName'],
-      client: store.getters['preferences/client'],
-      givenName: store.getters['preferences/givenName'],
-      familyName: store.getters['preferences/familyName'],
-      email: store.getters['preferences/email'],
-      emailVerified: store.getters['preferences/emailVerified'],
-      realmRoles: store.getters['preferences/realmRoles'],
-      clientRoles: store.getters['preferences/clientRoles'],
-      isActive: store.getters['preferences/isActive'],
-      isBearer: store.getters['preferences/isBearer']
-    } }, () => { return undefined })
+    return put('uinf', 'users', userId, () => {
+      return undefined
+    }, () => {
+      return {
+        userId: userId,
+        userName: store.getters['preferences/userName'],
+        client: store.getters['preferences/client'],
+        givenName: store.getters['preferences/givenName'],
+        familyName: store.getters['preferences/familyName'],
+        email: store.getters['preferences/email'],
+        emailVerified: store.getters['preferences/emailVerified'],
+        realmRoles: store.getters['preferences/realmRoles'],
+        clientRoles: store.getters['preferences/clientRoles'],
+        isActive: store.getters['preferences/isActive'],
+        isBearer: store.getters['preferences/isBearer']
+      }
+    }, () => { return undefined })
   },
   /**
    * Persists the preferences stored in VUEX to the REST-service.
    */
   savePreferences: async function () {
     const userName = store.getters['preferences/userName']
-    return getList('nexus', 'preferences', 1, 0, () => { return undefined }, () => { return undefined }, `&userName=${encodeURIComponent(userName)}`).then((response) => {
+    return getList('uinf', 'preferences', 1, 0, () => { return undefined }, () => { return undefined }, `&userName=${encodeURIComponent(userName)}`).then((response) => {
       if (isValidResult(response)) {
         // Update old.
         const entity = response.entries[0]
         entity.languageKey = store.getters['preferences/languageKey']
         entity.darkTheme = store.getters['preferences/darkTheme']
-        return put('nexus', 'preferences', entity.id, () => { return undefined }, () => { return entity }, () => { return undefined })
+        return put('uinf', 'preferences', entity.id, () => { return undefined }, () => { return entity }, () => { return undefined })
       }
       // Make new.
-      return post('nexus', 'preferences', () => { return undefined }, () => { return {
-        languageKey: store.getters['preferences/languageKey'],
-        darkTheme: store.getters['preferences/darkTheme']
-      } }, () => { return undefined })
+      return post('uinf', 'preferences', () => { return undefined }, () => {
+        return {
+          languageKey: store.getters['preferences/languageKey'],
+          darkTheme: store.getters['preferences/darkTheme']
+        }
+      }, () => { return undefined })
     })
   }
 }

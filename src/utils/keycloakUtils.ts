@@ -1,4 +1,5 @@
 import store from '@/store'
+import preferencesUtils from '@/utils/preferencesUtils'
 
 async function removeTokensFromLocalStorage () {
   console.log('Removing keycloak tokens from local storage.')

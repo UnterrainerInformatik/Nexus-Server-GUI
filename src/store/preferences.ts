@@ -120,6 +120,9 @@ const store = {
     userId: state => {
       return state.userId
     },
+    userName: state => {
+      return state.userName
+    },
     darkTheme: state => {
       return state.darkTheme
     },

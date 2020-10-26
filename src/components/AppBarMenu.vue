@@ -42,6 +42,7 @@
           @click="
             () => {
               $i18n.locale = lang
+              $store.dispatch('preferences/languageKey', lang)
               setLocalStorage('lang', lang)
             }
           "
@@ -71,7 +72,7 @@
           <v-list-item v-bind="attrs" v-on="on">
             <v-list-item-action>
               <v-switch
-                v-model="$vuetify.theme.dark"
+                v-model="dark"
                 color="primary"
               ></v-switch>
             </v-list-item-action>
@@ -104,6 +105,7 @@
 
 <script lang="js">
 import { mapGetters } from 'vuex'
+import preferencesUtils from '@/utils/preferencesUtils'
 
 export default {
   name: 'AppBarMenu',
@@ -119,6 +121,16 @@ export default {
       },
       set (value) {
         this.$store.dispatch('gui/tooltips/tooltips', value)
+      }
+    },
+    dark: {
+      get () {
+        return this.$vuetify.theme.dark
+      },
+      set (value) {
+        this.$vuetify.theme.dark = value
+        this.$store.dispatch('preferences/darkTheme', value)
+        // preferencesUtils.save()
       }
     },
     ...mapGetters('gui/tooltips', {

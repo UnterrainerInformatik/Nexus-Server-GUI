@@ -55,6 +55,11 @@
       </v-app-bar>
 
       <v-main>
+        <div>
+          userName: {{ userName }}<br>
+          darkTheme: {{ darkTheme }}<br>
+          languageKey: {{ languageKey }}
+        </div>
         <modalLoading></modalLoading>
         <snackbar></snackbar>
         <v-container fluid>
@@ -73,6 +78,7 @@ import AppBarMenu from '@/components/AppBarMenu.vue'
 import Snackbar from '@/components/Snackbar.vue'
 import ModalLoading from '@/components/ModalLoading.vue'
 import keycloakUtils from '@/utils/keycloakUtils'
+import preferencesUtils from '@/utils/preferencesUtils'
 
 export default {
   name: 'Main',
@@ -115,6 +121,13 @@ export default {
     ...mapGetters('gui/tooltips', {
       tooltips: 'tooltips',
       openDelay: 'openDelay'
+    }),
+    ...mapGetters('preferences', {
+      darkTheme: 'darkTheme',
+      languageKey: 'languageKey'
+    }),
+    ...mapGetters('keycloak', {
+      userName: 'email'
     })
   },
 
@@ -135,6 +148,11 @@ export default {
   },
 
   mounted () {
+    preferencesUtils.load()
+    /** Get username:
+     * https://stackoverflow.com/questions/40986480/how-to-get-current-user-name-with-keycloak
+     * 
+     */
     const lang = localStorage.getItem('lang')
     if (lang != null && lang !== undefined) {
       this.$i18n.locale = lang
