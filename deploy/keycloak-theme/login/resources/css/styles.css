@@ -2,6 +2,7 @@
   background: url('../img/logo.png') no-repeat scroll 15% 14vh black;
   background-attachment: fixed;
   background-size: 300px 80px;
+  font-family: 'Roboto', 'Open Sans', Helvetica, Arial, sans-serif;
 }
 
 .login-pf-page .card-pf {
@@ -26,7 +27,7 @@ div#kc-form label {
 /*fields*/
 .login-pf-page input[type='text'],
 .login-pf-page input[type='password'] {
-  color: #ddd;
+  color: #000000;
 }
 
 /*button*/
@@ -41,6 +42,7 @@ div#kc-header {
 div#kc-locale {
   font-size: larger;
 }
-#kc-locale-dropdown a, a {
+#kc-locale-dropdown a,
+a {
   color: #d1c4e9;
 }

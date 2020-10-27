@@ -56,8 +56,8 @@
 
       <v-main>
         <div>
-          userName: {{ userName }}<br>
-          darkTheme: {{ darkTheme }}<br>
+          userName: {{ userName }}<br />
+          darkTheme: {{ darkTheme }}<br />
           languageKey: {{ languageKey }}
         </div>
         <modalLoading></modalLoading>
@@ -127,7 +127,7 @@ export default {
       languageKey: 'languageKey'
     }),
     ...mapGetters('keycloak', {
-      userName: 'email'
+      userName: 'userName'
     })
   },
 
@@ -148,11 +148,6 @@ export default {
   },
 
   mounted () {
-    preferencesUtils.load()
-    /** Get username:
-     * https://stackoverflow.com/questions/40986480/how-to-get-current-user-name-with-keycloak
-     * 
-     */
     const lang = localStorage.getItem('lang')
     if (lang != null && lang !== undefined) {
       this.$i18n.locale = lang
@@ -161,6 +156,7 @@ export default {
     if (dark != null && dark !== undefined) {
       this.$vuetify.theme.dark = dark
     }
+    preferencesUtils.load(this.userName)
   }
 }
 </script>

@@ -10,6 +10,7 @@ const store = {
     token: '',
     realmRoles: [],
     clientRoles: [],
+    userName: null,
     givenName: '',
     familyName: '',
     email: '',
@@ -40,6 +41,9 @@ const store = {
     },
     givenName (state, value) {
       state.givenName = value
+    },
+    userName (state, value) {
+      state.userName = value
     },
     familyName (state, value) {
       state.familyName = value
@@ -85,6 +89,10 @@ const store = {
       context.commit('givenName', value)
       return Promise.resolve()
     },
+    userName (context, value) {
+      context.commit('userName', value)
+      return Promise.resolve()
+    },
     familyName (context, value) {
       context.commit('familyName', value)
       return Promise.resolve()
@@ -123,6 +131,9 @@ const store = {
     },
     givenName: state => {
       return state.givenName
+    },
+    userName: state => {
+      return state.userName
     },
     familyName: state => {
       return state.familyName

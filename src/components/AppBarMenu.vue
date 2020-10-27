@@ -44,6 +44,7 @@
               $i18n.locale = lang
               $store.dispatch('preferences/languageKey', lang)
               setLocalStorage('lang', lang)
+              savePreferences()
             }
           "
           active-class="v-list-item--active"
@@ -71,10 +72,7 @@
         <template v-slot:activator="{ on, attrs }">
           <v-list-item v-bind="attrs" v-on="on">
             <v-list-item-action>
-              <v-switch
-                v-model="dark"
-                color="primary"
-              ></v-switch>
+              <v-switch v-model="dark" color="primary"></v-switch>
             </v-list-item-action>
             <v-list-item-title>{{ $t('mnu.dark') }}</v-list-item-title>
           </v-list-item>
@@ -130,7 +128,7 @@ export default {
       set (value) {
         this.$vuetify.theme.dark = value
         this.$store.dispatch('preferences/darkTheme', value)
-        // preferencesUtils.save()
+        preferencesUtils.savePreferences()
       }
     },
     ...mapGetters('gui/tooltips', {
@@ -140,6 +138,9 @@ export default {
   },
 
   methods: {
+    savePreferences () {
+      preferencesUtils.savePreferences()
+    },
     setLocalStorage (key, value) {
       localStorage.setItem(key, value)
     }

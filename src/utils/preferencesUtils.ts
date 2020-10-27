@@ -2,13 +2,13 @@ import store from '@/store'
 import { getList, post, put } from '@/utils/axiosUtils'
 
 function isValidResult (response) {
-  return response != null && response !== undefined && response.entries.size() > 0
+  return response != null && response !== undefined && response.entries.length > 0
 }
 
 export default {
-  load: async function () {
-    return this.loadUser().then(() => {
-      return this.loadPreferences()
+  load: async function (userName) {
+    return this.loadUser(userName).then(() => {
+      return this.loadPreferences(userName)
     })
   },
   save: async function () {
@@ -20,8 +20,7 @@ export default {
    * Loads the user from the REST-service into VUEX.
    * @param userName the userName to load the user-object for
    */
-  loadUser: async function () {
-    const userName = store.getters['keycloak/email']
+  loadUser: async function (userName) {
     return getList('uinf', 'users', 1, 0, () => { return undefined }, () => { return undefined }, `&userName=${encodeURIComponent(userName)}`).then((response) => {
       if (isValidResult(response)) {
         const user = response.entries[0]
@@ -44,12 +43,11 @@ export default {
    * Loads the preferences from the REST-service into VUEX.
    * @param userName the userName to load the preferences-object for
    */
-  loadPreferences: async function () {
-    const userName = store.getters['keycloak/email']
+  loadPreferences: async function (userName) {
     return getList('uinf', 'preferences', 1, 0, () => { return undefined }, () => { return undefined }, `&userName=${encodeURIComponent(userName)}`).then((response) => {
       if (isValidResult(response)) {
         const pref = response.entries[0]
-        store.dispatch('preferences/darktheme', pref.darkTheme)
+        store.dispatch('preferences/darkTheme', pref.darkTheme)
         store.dispatch('preferences/languageKey', pref.languageKey)
       }
       return Promise.resolve()

@@ -1,5 +1,4 @@
 import store from '@/store'
-import preferencesUtils from '@/utils/preferencesUtils'
 
 async function removeTokensFromLocalStorage () {
   console.log('Removing keycloak tokens from local storage.')
@@ -42,6 +41,7 @@ export default {
   },
   persist: async function (keycloak) {
     store.dispatch('keycloak/instance', keycloak)
+    console.log(keycloak)
     const token = keycloak.tokenParsed
     console.log(token)
     if (token !== undefined) {
@@ -54,6 +54,7 @@ export default {
       store.dispatch('keycloak/familyName', token.family_name)
       store.dispatch('keycloak/email', token.email)
       store.dispatch('keycloak/emailVerified', token.email_verified)
+      store.dispatch('keycloak/userName', token.preferred_username)
     }
     return persistTokensToLocalStorage(keycloak)
   },
@@ -66,6 +67,7 @@ export default {
     store.dispatch('keycloak/familyName', '')
     store.dispatch('keycloak/email', '')
     store.dispatch('keycloak/emailVerified', false)
+    store.dispatch('keycloak/userName', null)
     return removeTokensFromLocalStorage()
   },
   logout: async function () {
