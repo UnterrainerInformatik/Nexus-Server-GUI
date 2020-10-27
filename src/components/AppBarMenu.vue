@@ -43,7 +43,6 @@
             () => {
               $i18n.locale = lang
               $store.dispatch('preferences/languageKey', lang)
-              setLocalStorage('lang', lang)
               savePreferences()
             }
           "
@@ -140,9 +139,6 @@ export default {
   methods: {
     savePreferences () {
       preferencesUtils.savePreferences()
-    },
-    setLocalStorage (key, value) {
-      localStorage.setItem(key, value)
     }
   }
 }

@@ -148,15 +148,9 @@ export default {
   },
 
   mounted () {
-    const lang = localStorage.getItem('lang')
-    if (lang != null && lang !== undefined) {
-      this.$i18n.locale = lang
-    }
-    const dark = localStorage.getItem('dark')
-    if (dark != null && dark !== undefined) {
-      this.$vuetify.theme.dark = dark
-    }
-    preferencesUtils.load(this.userName)
+    preferencesUtils.load(this.$store.getters['keycloak/userName'])
+    this.$i18n.locale = this.$store.getters['preferences/languageKey']
+    this.$vuetify.theme.dark = this.$store.getters['preferences/darkTheme']
   }
 }
 </script>
