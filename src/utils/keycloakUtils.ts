@@ -41,9 +41,9 @@ export default {
   },
   persist: async function (keycloak) {
     store.dispatch('keycloak/instance', keycloak)
-    console.log(keycloak)
+    // console.log(keycloak)
     const token = keycloak.tokenParsed
-    console.log(token)
+    // console.log(token)
     if (token !== undefined) {
       store.dispatch('keycloak/token', keycloak.token)
       store.dispatch('keycloak/realmRoles', token.realm_access.roles)
