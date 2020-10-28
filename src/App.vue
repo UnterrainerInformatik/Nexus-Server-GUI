@@ -148,9 +148,10 @@ export default {
   },
 
   mounted () {
-    preferencesUtils.load(this.$store.getters['keycloak/userName'])
-    this.$i18n.locale = this.$store.getters['preferences/languageKey']
-    this.$vuetify.theme.dark = this.$store.getters['preferences/darkTheme']
+    preferencesUtils.load(this.$store.getters['keycloak/userName']).then(() => {
+      this.$i18n.locale = this.$store.getters['preferences/languageKey']
+      this.$vuetify.theme.dark = this.$store.getters['preferences/darkTheme']
+    })
   }
 }
 </script>
