@@ -55,8 +55,7 @@ services:
       - DB_PASSWORD=${KEYCLOAK_DB_PASSWORD}
       - PROXY_ADDRESS_FORWARDING=true
       - KEYCLOAK_HOSTNAME=keycloak.unterrainer.info
-    command: ["./wait-for-it.sh", "db:5432", "--", "python", "app.py"]
-    command: ["-b", "0.0.0.0", "-Dkeycloak.profile.feature.docker=enabled"]
+    command: ["./wait-for-it.sh", "db:5432", "--", "/opt/jboss/tools/docker-entrypoint.sh", "-b", "0.0.0.0", "-Dkeycloak.profile.feature.docker=enabled"]
     volumes:
       - "/app/deploy/nexus-server-gui/keycloak-theme:/opt/jboss/keycloak/themes/nexus-theme"
     labels:
