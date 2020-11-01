@@ -9,14 +9,14 @@ services:
       - TIMEOUT_LENGTH=300
     command: keycloak_db:3306
 
-    wait_for_kc:
-      image: dadarek/wait-for-dependencies
-      depends_on:
-        - keycloak
-        environment:
-          - SLEEP_LENGTH=2
-          - TIMEOUT_LENGTH=300
-      command: keycloak:8080
+  wait_for_kc:
+    image: dadarek/wait-for-dependencies
+    depends_on:
+      - keycloak
+    environment:
+      - SLEEP_LENGTH=2
+      - TIMEOUT_LENGTH=300
+    command: keycloak:8080
 
   web:
     image: gufalcon/nexus-server-gui:latest
