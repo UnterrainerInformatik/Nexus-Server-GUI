@@ -1,10 +1,28 @@
 version: "3"
 services:
+  wait_for_kc_db:
+    image: dadarek/wait-for-dependencies
+    depends_on:
+      - keycloak_db
+    environment:
+      - SLEEP_LENGTH=2
+      - TIMEOUT_LENGTH=300
+    command: keycloak_db:3306
+
+    wait_for_kc:
+      image: dadarek/wait-for-dependencies
+      depends_on:
+        - keycloak
+        environment:
+          - SLEEP_LENGTH=2
+          - TIMEOUT_LENGTH=300
+      command: keycloak:8080
+
   web:
     image: gufalcon/nexus-server-gui:latest
     restart: always
     depends_on:
-      - keycloak
+      - wait_for_kc
     ports:
       - "1380:80"
       - "13443:443"
@@ -42,7 +60,7 @@ services:
     image: jboss/keycloak:11.0.2
     restart: always
     depends_on:
-      - keycloak_db
+      - wait_for_kc_db
     ports:
       - 13222:8080
     environment:
