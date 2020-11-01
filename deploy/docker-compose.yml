@@ -21,6 +21,23 @@ services:
       - "traefik.nexus.frontend.rule=Host:nexus-app.unterrainer.info"
       - "traefik.nexus.frontend.entryPoints=http,https"
 
+  keycloak_db:
+    image: mariadb:10.5.6-focal
+    restart: always
+    ports:
+      - 13300:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=${KEYCLOAK_DB_ROOT_PASSWORD}
+      - MYSQL_DATABASE=keycloak
+      - MYSQL_USER=keycloak
+      - MYSQL_PASSWORD=${KEYCLOAK_DB_PASSWORD}
+      - PROXY_ADDRESS_FORWARDING=true
+      - KEYCLOAK_HOSTNAME=keycloak.unterrainer.info
+    volumes:
+      - "/app/data/keycloak-nexus/mysql-data/db:/var/lib/mysql"
+    labels:
+      - "traefik.enable=false"
+
   keycloak:
     image: jboss/keycloak:11.0.2
     restart: always
@@ -38,6 +55,7 @@ services:
       - DB_PASSWORD=${KEYCLOAK_DB_PASSWORD}
       - PROXY_ADDRESS_FORWARDING=true
       - KEYCLOAK_HOSTNAME=keycloak.unterrainer.info
+    command: ["./wait-for-it.sh", "db:5432", "--", "python", "app.py"]
     command: ["-b", "0.0.0.0", "-Dkeycloak.profile.feature.docker=enabled"]
     volumes:
       - "/app/deploy/nexus-server-gui/keycloak-theme:/opt/jboss/keycloak/themes/nexus-theme"
@@ -47,23 +65,6 @@ services:
       - "traefik.keycloak.backend=keycloak"
       - "traefik.keycloak.frontend.rule=Host:keycloak.unterrainer.info"
       - "traefik.keycloak.frontend.entryPoints=http, https"
-
-  keycloak_db:
-    image: mariadb:10.5.6-focal
-    restart: always
-    ports:
-      - 13300:3306
-    environment:
-      - MYSQL_ROOT_PASSWORD=${KEYCLOAK_DB_ROOT_PASSWORD}
-      - MYSQL_DATABASE=keycloak
-      - MYSQL_USER=keycloak
-      - MYSQL_PASSWORD=${KEYCLOAK_DB_PASSWORD}
-      - PROXY_ADDRESS_FORWARDING=true
-      - KEYCLOAK_HOSTNAME=keycloak.unterrainer.info
-    volumes:
-      - "/app/data/keycloak-nexus/mysql-data/db:/var/lib/mysql"
-    labels:
-      - "traefik.enable=false"
 
 networks:
   default:
