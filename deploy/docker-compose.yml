@@ -76,7 +76,6 @@ services:
       - DB_PASSWORD=${KEYCLOAK_DB_PASSWORD}
       - PROXY_ADDRESS_FORWARDING=true
       - KEYCLOAK_HOSTNAME=keycloak.unterrainer.info
-      - JGROUPS_DISCOVERY_PROTOCOL=JDBC_PING
     command: ["-b", "0.0.0.0", "-Dkeycloak.profile.feature.docker=enabled"]
     volumes:
       - "/app/deploy/nexus-server-gui/keycloak-theme:/opt/jboss/keycloak/themes/nexus-theme"
