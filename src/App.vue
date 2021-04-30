@@ -10,7 +10,7 @@
         :permanent="$vuetify.breakpoint.mdAndUp"
         :temporary="!$vuetify.breakpoint.mdAndUp"
       >
-        <nav-drawer></nav-drawer>
+        <NavDrawer></NavDrawer>
       </v-navigation-drawer>
 
       <v-app-bar v-cloak app clipped-left short dense color="primary">
@@ -37,7 +37,7 @@
         </h3>
         <v-spacer></v-spacer>
 
-        <app-bar-menu></app-bar-menu>
+        <AppBarMenu></AppBarMenu>
 
         <v-tooltip
           bottom
@@ -60,8 +60,8 @@
           darkTheme: {{ darkTheme }}<br />
           languageKey: {{ languageKey }}
         </div>
-        <modalLoading></modalLoading>
-        <snackbar></snackbar>
+        <ModalLoading></ModalLoading>
+        <Snackbar></Snackbar>
         <v-container fluid>
           <router-view>Loading...</router-view>
         </v-container>
