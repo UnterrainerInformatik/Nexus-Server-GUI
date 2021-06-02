@@ -35,8 +35,8 @@ services:
       - PROXY_ADDRESS_FORWARDING=true
       - KEYCLOAK_HOSTNAME=keycloak.unterrainer.info
     # Copy-pasted from https://github.com/docker-library/mariadb/issues/94
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "--silent"]
+    #healthcheck:
+    #  test: ["CMD", "mysqladmin", "ping", "--silent"]
     volumes:
       - "/app/data/keycloak-nexus/mysql-data/db:/var/lib/mysql"
     labels:
