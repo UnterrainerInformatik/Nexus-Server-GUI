@@ -1,30 +1,37 @@
 import store from '@/store'
-import { getList, post, put } from '@/utils/axiosUtils'
+import { singleton as usersService } from '@/utils/webservices/usersService'
+import { singleton as preferencesService } from '@/utils/webservices/preferencesService'
 
-function isValidResult (response) {
-  return response != null && response !== undefined && response.entries.length > 0
-}
+class PreferencesUtils {
+  private static instanceField: PreferencesUtils
 
-export default {
-  load: async function (userName) {
+  public static getInstance () {
+    if (!this.instanceField) {
+      this.instanceField || (this.instanceField = new PreferencesUtils())
+    }
+    return this.instanceField
+  }
+
+  public async load (userName): Promise<any> {
     return this.loadUser(userName).then(() => {
       return this.loadPreferences(userName)
     })
-  },
-  save: async function () {
+  }
+
+  public async save (): Promise<object | undefined> {
     return this.saveUser().then(() => {
       return this.savePreferences()
     })
-  },
+  }
+
   /**
    * Loads the user from the REST-service into VUEX.
    * @param userName the userName to load the user-object for
    */
-  loadUser: async function (userName) {
-    return getList('uinf', 'users', 1, 0, () => { return undefined }, () => { return undefined }, `&userName=${encodeURIComponent(userName)}`).then((response) => {
-      if (isValidResult(response)) {
-        const user = response.entries[0]
-        store.dispatch('preferences/userId', user.userId)
+  public async loadUser (userName: string) {
+    return usersService.getByUserName(userName).then((user) => {
+      if (user != null) {
+        store.dispatch('preferences/userId', user.id)
         store.dispatch('preferences/userName', user.userName)
         store.dispatch('preferences/client', user.client)
         store.dispatch('preferences/givenName', user.givenName)
@@ -38,29 +45,26 @@ export default {
       }
       return Promise.resolve()
     })
-  },
+  }
+
   /**
    * Loads the preferences from the REST-service into VUEX.
    * @param userName the userName to load the preferences-object for
    */
-  loadPreferences: async function (userName) {
-    return getList('uinf', 'preferences', 1, 0, () => { return undefined }, () => { return undefined }, `&userName=${encodeURIComponent(userName)}`).then((response) => {
-      if (isValidResult(response)) {
-        const pref = response.entries[0]
-        store.dispatch('preferences/darkTheme', pref.darkTheme)
-        store.dispatch('preferences/languageKey', pref.languageKey)
-      }
+  public async loadPreferences (userName: string): Promise<any> {
+    return preferencesService.getByUserName(userName).then((entity) => {
+      store.dispatch('preferences/darkTheme', entity.darkTheme)
+      store.dispatch('preferences/languageKey', entity.languageKey)
       return Promise.resolve()
     })
-  },
+  }
+
   /**
    * Persists the user stored in VUEX to the REST-service.
    */
-  saveUser: async function () {
+  public async saveUser (): Promise<object | undefined> {
     const userId = store.getters['preferences/userId']
-    return put('uinf', 'users', userId, () => {
-      return undefined
-    }, () => {
+    return usersService.put(userId, () => {
       return {
         userId: userId,
         userName: store.getters['preferences/userName'],
@@ -74,28 +78,21 @@ export default {
         isActive: store.getters['preferences/isActive'],
         isBearer: store.getters['preferences/isBearer']
       }
-    }, () => { return undefined })
-  },
+    })
+  }
+
   /**
    * Persists the preferences stored in VUEX to the REST-service.
    */
-  savePreferences: async function () {
+  public async savePreferences (): Promise<object | undefined> {
     const userName = store.getters['preferences/userName']
-    return getList('uinf', 'preferences', 1, 0, () => { return undefined }, () => { return undefined }, `&userName=${encodeURIComponent(userName)}`).then((response) => {
-      if (isValidResult(response)) {
-        // Update old.
-        const entity = response.entries[0]
-        entity.languageKey = store.getters['preferences/languageKey']
-        entity.darkTheme = store.getters['preferences/darkTheme']
-        return put('uinf', 'preferences', entity.id, () => { return undefined }, () => { return entity }, () => { return undefined })
+    return preferencesService.upsertByUserName(userName, () => {
+      return {
+        languageKey: store.getters['preferences/languageKey'],
+        darkTheme: store.getters['preferences/darkTheme']
       }
-      // Make new.
-      return post('uinf', 'preferences', () => { return undefined }, () => {
-        return {
-          languageKey: store.getters['preferences/languageKey'],
-          darkTheme: store.getters['preferences/darkTheme']
-        }
-      }, () => { return undefined })
     })
   }
 }
+
+export const singleton = PreferencesUtils.getInstance()

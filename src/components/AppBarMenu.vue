@@ -102,7 +102,7 @@
 
 <script lang="js">
 import { mapGetters } from 'vuex'
-import preferencesUtils from '@/utils/preferencesUtils'
+import { singleton as preferencesUtils } from '@/utils/preferencesUtils'
 
 export default {
   name: 'AppBarMenu',

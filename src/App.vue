@@ -77,8 +77,8 @@ import NavDrawer from '@/components/NavDrawer.vue'
 import AppBarMenu from '@/components/AppBarMenu.vue'
 import Snackbar from '@/components/Snackbar.vue'
 import ModalLoading from '@/components/ModalLoading.vue'
-import keycloakUtils from '@/utils/keycloakUtils'
-import preferencesUtils from '@/utils/preferencesUtils'
+import { singleton as keycloakUtils } from '@/utils/keycloakUtils'
+import { singleton as preferencesUtils } from '@/utils/preferencesUtils'
 
 export default {
   name: 'Main',
