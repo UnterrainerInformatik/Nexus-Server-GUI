@@ -15,7 +15,7 @@ import VueAxios from 'vue-axios'
 import VueGoogleCharts from 'vue-google-charts'
 
 import Keycloak from 'keycloak-js'
-import keycloakUtils from '@/utils/keycloakUtils'
+import { singleton as keycloakUtils } from '@/utils/keycloakUtils'
 
 Vue.config.productionTip = false
 
